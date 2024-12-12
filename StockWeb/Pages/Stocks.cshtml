@@ -1,0 +1,102 @@
+﻿@page
+@using Portfolio_Tracker.Models
+@model Portfolio_Tracker.Pages.StocksModel
+@{
+    <style>
+        .row-design {
+
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col align-self-center">
+                <h1>Positions</h1>
+            </div>
+        </div>
+    </div>
+    <form method="post">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-auto align-self-center">
+                    <span>
+                        <span style="font-weight: 650;">Stock</span>
+                        <input type="text" name="symbol" placeholder="NVDA"/>
+                    </span>
+                </div>
+                <div class="col-2 align-self-center">
+                    <button type="submit" class="btn btn-success">Add Stock</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <!-- <th>Id</th>-->
+                <th>Symbol</th>
+                <th>Company</th>
+                <th>Sector</th>
+                <th>Shares</th>
+                <th>Current Price</th>
+                <th>Open Price</th>
+                <th>High Price</th>
+                <th>Low Price</th>
+                <th></th>
+                <!-- <th>Expense Ratio</th>
+                <th>Dividend Yield</th>-->
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach(Stock stock in Model.Stocks)
+            {
+                <tr>
+                    <!--<td>
+                        @stock.Id
+                    </td>-->
+                    <td>
+                        <span>@stock.Symbol</span>
+                    </td>
+                    <td>
+                        @stock.Company
+                    </td>
+                    <td>
+                        <span>@stock.Sector</span>
+                    </td>
+                    <td>
+                        <span contenteditable="true">@stock.SharesOwned</span>
+                    </td>
+                    <td>
+                        <span>@stock.CurrentPrice</span>
+                    </td>
+                    <td>
+                        <span>@stock.OpenPrice</span>
+                    </td>
+                    <td>
+                        <span>@stock.HighPrice</span>
+                    </td>
+                    <td>
+                        <span>@stock.LowPrice</span>
+                    </td>
+                    <!-- <td>
+                        <span>@stock.ExpenseRatio</span>
+                    </td>
+                    <td>
+                        <span>@stock.DividendYield</span>
+                    </td> -->
+                    <td>
+                        <form method="post">
+                            <button class="btn btn-danger" type="submit" asp-page-handler="Delete" asp-route-id="@stock.Id">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
