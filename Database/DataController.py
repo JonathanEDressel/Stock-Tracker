@@ -31,18 +31,12 @@ def query_db(query, args=(), one=False):
 
 
 def fetchData(symbol):
-    print("here")
     priceUrl = f"{base_url}/quote?symbol={symbol}&token={api_key}"
-    print(priceUrl)
     priceRes = requests.get(priceUrl)
-    print("here")
     priceRes.raise_for_status()
 
-    print("here")
     profileUrl = f"{base_url}/stock/profile2?symbol={symbol}&token={api_key}"
-    print("here")
     profileRes = requests.get(profileUrl)
-    print("here")
     profileRes.raise_for_status()
     
     dbRes = PortfolioData.get_stock(symbol)
