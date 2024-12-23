@@ -14,9 +14,6 @@ namespace Portfolio_Tracker.Pages
         private readonly DatabaseContext _context;
         private readonly StockController _stockController;
 
-        //private static readonly string StockKey = "89N4TEH4NQFBDTUP";
-        //private static readonly string BaseUrl = "https://www.alphavantage.co/query";
-
         public List <Stock> Stocks { get; set; } = new List<Stock>();
         [BindProperty]
         public Stock NewStock { get; set; }
@@ -29,32 +26,37 @@ namespace Portfolio_Tracker.Pages
 
         public async Task OnGetAsync()
         {
-            Stocks = await StockController.GetAllStocks(0); //_context.Stocks.ToList();
-            //var tmp = StockController.GetAllStocks(0);
+            Stocks = await StockController.GetAllStocks(0);
+        }
+
+        public async Task<IActionResult> OnPostSyncStocks()
+        {
+            Stocks = await StockController.GetAllStocks(0);
+            return RedirectToPage();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            //string sym = NewStock?.Symbol ?? "";
-            //NewStock = await StockController.GetStockDetails(NewStock?.Symbol ?? "");
-            //if (NewStock == null)
-            //    return RedirectToPage();
+            string sym = NewStock?.Symbol ?? "";
+            NewStock = await StockController.GetStockDetails(NewStock?.Symbol ?? "");
+            if (NewStock == null)
+                return RedirectToPage();
 
-            //var res = await StockController.AddStock(NewStock);
-            //if(res > 0)
-            //{
-            //    _context.Stocks.Add(NewStock);
-            //    _context.SaveChanges();
-            //}
+            var res = await StockController.AddStock(NewStock);
+            if(res > 0)
+            {
+                _context.Stocks.Add(NewStock);
+                _context.SaveChanges();
+            }
 
             return RedirectToPage();
         }
 
         public async Task<IActionResult> OnPostDelete(int id)
         {
-            //var res = await StockController.RemoveStock(id);
-            //if (res)
-            //    return RedirectToPage();
+            var res = await StockController.RemoveStock(id);
+            if (res)
+                return RedirectToPage();
             return RedirectToPage();
         }
 

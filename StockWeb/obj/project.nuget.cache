@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LPJdTnEc460=",
+  "dgSpecHash": "nYkvuMWw/48=",
   "success": true,
-  "projectFilePath": "C:\\Users\\jonny\\source\\repos\\Portfolio Tracker\\Portfolio Tracker\\Portfolio Tracker.csproj",
+  "projectFilePath": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Portfolio Tracker.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jonny\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\jonny\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

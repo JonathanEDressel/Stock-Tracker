@@ -14,10 +14,8 @@ namespace Portfolio_Tracker.Controllers
 {
     public class StockController : Controller
     {
-        //private static readonly string StockKey = "89N4TEH4NQFBDTUP";
-        private static readonly string apiURL = "http://192.168.4.74:5000/";
-        private static readonly string dbURL = "http://192.168.4.61:5001/";
-
+        
+        private static readonly string URL = "http://192.168.4.74:5000/";
         public IActionResult Index()
         {
             return View();
@@ -26,7 +24,7 @@ namespace Portfolio_Tracker.Controllers
         public static async Task<Stock> GetStockDetails(string symbol)
         {
             using HttpClient client = new HttpClient();
-            string url = $"{apiURL}api/stock/{symbol}";
+            string url = $"{URL}api/stock/{symbol}";
 
             HttpResponseMessage response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
@@ -63,7 +61,7 @@ namespace Portfolio_Tracker.Controllers
                 List<Stock> stocks = new List<Stock>();
 
                 using HttpClient client = new HttpClient();
-                string url = $"{apiURL}stocks";
+                string url = $"{URL}stocks";
 
                 var response = await client.GetAsync(url);
                 if(response.IsSuccessStatusCode)
@@ -102,7 +100,7 @@ namespace Portfolio_Tracker.Controllers
             try
             {
                 using HttpClient client = new HttpClient();
-                string url = $"{apiURL}stocks/{id}";
+                string url = $"{URL}stocks/{id}";
 
                 var jscontent = JsonConvert.SerializeObject(id);
                 var content = new StringContent(jscontent, Encoding.UTF8, "application/json");
@@ -130,7 +128,7 @@ namespace Portfolio_Tracker.Controllers
             try
             {
                 using HttpClient client = new HttpClient();
-                string url = $"{apiURL}stocks/stock";
+                string url = $"{URL}stocks/stock";
 
                 var jscontent = JsonConvert.SerializeObject(stk);
                 var content = new StringContent(jscontent, Encoding.UTF8, "application/json");
