@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5B+v0FHMH/K78JZq/ZDNev8mFnqNdgyfiJQjHNkmhWQ=",
+  "Hash": "UkpgdFDMQ/t3k26snxE5HniF1DuTiFFABuX+UvCStok=",
   "Source": "Portfolio Tracker",
   "BasePath": "_content/Portfolio Tracker",
   "Mode": "Default",
@@ -927,6 +927,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\wwwroot\\images\\background.jpg",
+      "SourceId": "Portfolio Tracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\wwwroot\\",
+      "BasePath": "_content/Portfolio Tracker",
+      "RelativePath": "images/background.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\background.jpg"
     },
     {
       "Identity": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\wwwroot\\js\\site.js",
