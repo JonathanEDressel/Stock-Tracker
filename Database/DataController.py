@@ -98,7 +98,9 @@ def addStockData():
 @app.route('/stocks/stock/<int:id>', methods=['PATCH'])
 @limiter.limit("20 per minute")
 def editSharesHeld(id):
-    shares = request.json.get('shares')
+    print(id)
+    shares = request.json.get('sharesOwned')
+    print(request.json)
     return PortfolioData.edit_stock_shares(id, shares)
 
 @app.route('/stocks', methods=['GET'])

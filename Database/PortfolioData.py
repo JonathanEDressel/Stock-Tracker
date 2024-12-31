@@ -56,13 +56,13 @@ def delete_stock(id):
     return jsonify({"message": f"Record with ID {id} deleted successfully"}), 200
 
 def add_stock():
-    if not request.json or 'Symbol' not in request.json:
-        abort(400, "Invalid data: 'Symbol' is a required field.")
+    if not request.json or 'symbol' not in request.json:
+        abort(400, "Invalid data: 'symbol' is a required field.")
 
-    symbol = request.json['Symbol']
-    sharesOwned = request.json.get('SharesOwned')
-    company = request.json.get('Company')
-    sector = request.json.get('Sector')
+    symbol = request.json['symbol'].upper()
+    sharesOwned = request.json.get('sharesOwned')
+    company = request.json.get('name')
+    sector = request.json.get('sector')
 
     conn = sqlite3.connect('stocks.db')
     cur = conn.cursor()
@@ -74,7 +74,7 @@ def add_stock():
         return jsonify({"message": "Record already exsis in database"}), 400
 
     cur.execute('''
-        INSERT INTO stock_data (Symbol, SharesOwned, Company, Sector)
+        INSERT INTO stock_data (symbol, sharesOwned, Company, Sector)
         VALUES (?, ?, ?, ?)
     ''', (symbol, sharesOwned, company, sector))
     conn.commit()
