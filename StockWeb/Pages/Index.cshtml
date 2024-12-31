@@ -1,13 +1,26 @@
 ﻿@page
+@using Portfolio_Tracker.Pages.Home
 @model IndexModel
 @{
     ViewData["Title"] = "Overview";
 }
+<style>
 
-<div class="text-center">
+</style>
+<div class="text-center" style="color: white;">
      <form method="post">
-        <button type="submit" formaction="IncrementCounter" class="btn btn-success">Add Stock</button>
+        <div>
+            <div>
+                <h2>What Am I?</h2>
+                <span>Welcome to my Portfolio Tracker! This is a simple program that implements the simple CRUD operations
+                    (<b>C</b>reate, <b>R</b>ead, <b>U</b>pdate, and <b>D</b>elete). On the back-end the program uses Python and SQL while
+                    on the front-end it uses C# and CSS/HTML. 
+                </span>
+            </div>
+        </div>
+        <div>
+
+        </div>
         
     </form>
 </div>
-

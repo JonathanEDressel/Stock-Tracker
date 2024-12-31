@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Portfolio_Tracker.Controllers;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Portfolio_Tracker.Models
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<Stock> Stocks { get; set; }
+        public DbSet<StockModel> Stocks { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

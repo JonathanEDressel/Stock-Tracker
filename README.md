@@ -10,11 +10,14 @@
   <li>Create AI Helper - Date TBD</li>
   <li>Set up Kubernetes - Date TBD</li>
   <li>Set up Docker Containers - Date TBD</li>
-  <li>Add bubble chart to stock's page - Date TBD</li>
   <li>Create login page - Date TBD</li>
   <li>Add authentication for login - Date TBD</li>
   <li>Auto refresh list of stocks chosen - Date TBD</li>
-  <li>Add auto refresh button - Date TBD</li>
+  <li>Add 401(k) calculator - Date TBD</li>
+  <li>Let user choose between which chart to view - Date TBD</li>
+  <li>Add bubble chart to stock's page - Date TBD</li>
+  <li><s>Add pie chart to stock's page </s> - December 30th, 2024</li>
+  <li><s>Add auto refresh button</s> - December 30th, 2024</li>
   <li><s>Ability to save shares held</s> - December 11th, 2024</li>
   <li><s>Add rate limiting to database calls</s> - December 11th, 2024</li>
   <li><s>Ability to delete a stock</s> - December 11th, 2024</li>

@@ -271,6 +271,9 @@
           }
         }
       },
+      "Chart.js/3.7.1": {
+        "type": "package"
+      },
       "EntityFramework/6.5.1": {
         "type": "package",
         "dependencies": {
@@ -3473,6 +3476,19 @@
         "contentFiles/any/any/wwwroot/js/bootstrap.js.map",
         "contentFiles/any/any/wwwroot/js/bootstrap.min.js",
         "contentFiles/any/any/wwwroot/js/bootstrap.min.js.map"
+      ]
+    },
+    "Chart.js/3.7.1": {
+      "sha512": "gJunTMEueTNdA5Hp92J9sv363msSemW+GSy1VtbrwjxCaMrp+/mgB20EdVezbP34dbM+h+A8G5XbEuL6tOJoCw==",
+      "type": "package",
+      "path": "chart.js/3.7.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "chart.js.3.7.1.nupkg.sha512",
+        "chart.js.nuspec",
+        "content/Scripts/chart.js",
+        "content/Scripts/chart.min.js"
       ]
     },
     "EntityFramework/6.5.1": {
@@ -7264,6 +7280,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "Chart.js >= 3.7.1",
       "Extended.Wpf.Toolkit >= 4.6.1",
       "FontAwesome >= 4.7.0",
       "GeoJSON.Net >= 1.4.1",
@@ -7284,11 +7301,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jonny\\source\\repos\\Portfolio Tracker\\Portfolio Tracker\\Portfolio Tracker.csproj",
+      "projectUniqueName": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Portfolio Tracker.csproj",
       "projectName": "Portfolio Tracker",
-      "projectPath": "C:\\Users\\jonny\\source\\repos\\Portfolio Tracker\\Portfolio Tracker\\Portfolio Tracker.csproj",
+      "projectPath": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Portfolio Tracker.csproj",
       "packagesPath": "C:\\Users\\jonny\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jonny\\source\\repos\\Portfolio Tracker\\Portfolio Tracker\\obj\\",
+      "outputPath": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -7327,6 +7344,10 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "Chart.js": {
+            "target": "Package",
+            "version": "[3.7.1, )"
+          },
           "Extended.Wpf.Toolkit": {
             "target": "Package",
             "version": "[4.6.1, )"
