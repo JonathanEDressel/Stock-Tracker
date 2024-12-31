@@ -1,3 +1,4 @@
+using Portfolio_Tracker.Controllers;
 using Portfolio_Tracker.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<DatabaseContext>();
+builder.Services.AddHttpClient<StockController>();
 
 var app = builder.Build();
 

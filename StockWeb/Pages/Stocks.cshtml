@@ -1,14 +1,15 @@
 ﻿@page
 @using Portfolio_Tracker.Models
-@model Portfolio_Tracker.Pages.StocksModel
+@model StocksModel
 @{
     <style>
-        .row-design {
+        .row-content:hover {
+            background-color: dodgerblue;
         }
     </style>
     <div class="container" style="color: white;">
         <div class="row">
-            <div class="col align-self-center">
+            <div class="col align-self-center" style="text-align: center;">
                 <h1>Positions</h1>
             </div>
         </div>
@@ -32,7 +33,6 @@
                 </div>
             </div>
         </div>
-
     </form>
 
     <table class="table" style="color: white;">
@@ -47,13 +47,14 @@
                 <th>High Price</th>
                 <th>Low Price</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
 
         <tbody>
-            @foreach (Stock stock in Model.Stocks)
+            @foreach (StockModel stock in Model.Stocks)
             {
-                <tr>
+                <tr class="row-content">
                     <td>
                         <span>@stock.Symbol</span>
                     </td>
@@ -64,7 +65,7 @@
                         <span>@stock.Sector</span>
                     </td>
                     <td>
-                        <span contenteditable="true">@stock.SharesOwned</span>
+                        <input type="number" class="shares-input" value="@stock.SharesOwned" data-stock-id="@stock.Id" />
                     </td>
                     <td>
                         <span>@stock.CurrentPrice</span>
@@ -79,8 +80,17 @@
                         <span>@stock.LowPrice</span>
                     </td>
                     <td>
-                        <form method="post">
-                            <button class="btn btn-danger" type="submit" asp-page-handler="Delete" asp-route-id="@stock.Id">
+                        <form method="post" asp-page-handler="SaveStocks" data-form-id="@stock.Id">
+                            <input type="hidden" name="id" value="@stock.Id" />
+                            <input type="hidden" name="shares" value="@stock.SharesOwned" />
+                            <button class="btn btn-success save-button" type="submit" data-stock-id="@stock.Id">
+                                <i class="fa-regular fa-floppy-disk"></i>
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@stock.Id">
+                            <button class="btn btn-danger" type="submit">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </form>
@@ -88,7 +98,26 @@
                 </tr>
             }
         </tbody>
-    </table>
+     </table>
+    <script>
+        document.querySelectorAll('.save-button').forEach(button => {
+            button.addEventListener('click', function (e) {
+                const stockId = this.dataset.stockId;
+                const input = document.querySelector(`.shares-input[data-stock-id='${stockId}']`);
+                const form = document.querySelector(`form[data-form-id='${stockId}']`);
+                if (input && form) {
+                    const hiddenInput = form.querySelector('input[name="shares"]');
+                    hiddenInput.value = input.value; // Update the hidden input with the current value of the shares input
+                }
+            });
+        });
+    </script>
+     <div>
+        <div class="d-flex justify-content-center">
+            <div class="col-auto">
+                @await Html.PartialAsync("_PieChartPartial", Model.PieChartData)
+            </div>
+        </div>
+     </div>
 }
-
 

@@ -14,141 +14,131 @@ namespace Portfolio_Tracker.Controllers
 {
     public class StockController : Controller
     {
-        
-        private static readonly string URL = "http://192.168.4.74:5000/";
+
+        private readonly HttpClient _client;
+        private readonly string _baseUrl;
+
+        public StockController(HttpClient client, IConfiguration configuration)
+        {
+            _client = client;
+            _baseUrl = configuration.GetSection("ApiSettings:BaseUrl").Value;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public static async Task<Stock> GetStockDetails(string symbol)
+        public async Task<StockModel> GetStockDetails(string symbol)
         {
-            using HttpClient client = new HttpClient();
-            string url = $"{URL}api/stock/{symbol}";
-
-            HttpResponseMessage response = await client.GetAsync(url);
-            if (response.IsSuccessStatusCode)
+            try
             {
-                string content = await response.Content.ReadAsStringAsync();
-                JObject json = JObject.Parse(content);
-                var name = json["name"].ToString();
-                Stock stk;
-                stk = new Stock();
-                stk.Id = (int)(json["id"] ?? 0);
-                stk.Symbol = json["symbol"]?.ToString().ToUpper();
-                stk.Company = json["name"]?.ToString();
-                stk.Sector = json["sector"]?.ToString();
-                stk.SharesOwned = (decimal)(json["sharesOwned"] ?? 0.00);
-                stk.CurrentPrice = (double)(json["current_price"] ?? 0);
-                stk.HighPrice = (double)(json["high_price"] ?? 0);
-                stk.LowPrice = (double)(json["low_price"] ?? 0);
-                stk.OpenPrice = (double)(json["open_price"] ?? 0);
-                stk.ExpenseRatio = (double)(json["expense_ratio"] ?? 0);
-                stk.DividendYield = (double)(json["dividend_yeild"] ?? 0);
+                string url = $"{_baseUrl}api/stock/{symbol}";
+                var response = await _client.GetAsync(url);
 
-                if (json != null && name != "")
-                    return stk;
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var res = JsonConvert.DeserializeObject<StockModel>(content);
+                    return JsonConvert.DeserializeObject<StockModel>(content);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching stock details: {ex.Message}");
             }
 
             return null;
         }
 
         //Stock_Data table
-        public static async Task<List<Stock>> GetAllStocks(int clientid)
+        public async Task<List<StockModel>> GetAllStocks(int clientid)
         {
             try
             {
-                List<Stock> stocks = new List<Stock>();
+                string url = $"{_baseUrl}stocks";
+                var response = await _client.GetAsync(url);
 
-                using HttpClient client = new HttpClient();
-                string url = $"{URL}stocks";
-
-                var response = await client.GetAsync(url);
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    dynamic json = await response.Content.ReadAsStringAsync();
-                    dynamic dynJson = JsonConvert.DeserializeObject(json);
-                    if (dynJson != null)
+                    var content = await response.Content.ReadAsStringAsync();
+                    var stocks = JsonConvert.DeserializeObject<List<StockModel>>(content);
+
+                    for (var i = 0; i < stocks?.Count; i++)
                     {
-                        foreach(var item in dynJson)
-                        {
-                            var sym = item["symbol"].ToString();
-                            Stock stk = new Stock();
-                            stk = await GetStockDetails(sym);
-                            stk.Id = (int)item["id"];
-                            stk.Company = item["company"].ToString();
-                            stk.Symbol = sym;
-                            stk.Sector = item["sector"].ToString();
-                            stk.SharesOwned = (decimal) (item["sharesOwned"] ?? 0.00);
-
-                            stocks.Add(stk);
-                        }
+                        stocks[i] = await GetStockDetails(stocks[i].Symbol ?? "");
                     }
+
+                    return stocks;
                 }
-                
-                return stocks;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
-                return null;
+                Console.WriteLine($"Error fetching stocks: {ex.Message}");
             }
+
+            return new List<StockModel>();
         }
 
-        public static async Task<bool> RemoveStock(int id)
+        public async Task<bool> RemoveStock(int id)
         {
             try
             {
-                using HttpClient client = new HttpClient();
-                string url = $"{URL}stocks/{id}";
-
-                var jscontent = JsonConvert.SerializeObject(id);
-                var content = new StringContent(jscontent, Encoding.UTF8, "application/json");
-
-                var response = await client.DeleteAsync(url);
-                if (response.IsSuccessStatusCode)
-                {
-                    //string res = await response.Content.ReadAsStringAsync();
-                    //JObject json = JObject.Parse(res);
-                    //var id = (int)json["id"];
-                    return true;
-                }
-
-                return false;
+                string url = $"{_baseUrl}stocks/{id}";
+                var response = await _client.DeleteAsync(url);
+                return response.IsSuccessStatusCode;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"Error removing stock: {ex.Message}");
                 return false;
             }
         }
 
-        public static async Task<int> AddStock(Stock stk)
+        public async Task<int> AddStock(StockModel stk)
         {
             try
             {
-                using HttpClient client = new HttpClient();
-                string url = $"{URL}stocks/stock";
+                string url = $"{_baseUrl}stocks/stock";
+                var content = new StringContent(JsonConvert.SerializeObject(stk), Encoding.UTF8, "application/json");
+                var response = await _client.PostAsync(url, content);
 
-                var jscontent = JsonConvert.SerializeObject(stk);
-                var content = new StringContent(jscontent, Encoding.UTF8, "application/json");
-
-                var response = await client.PostAsync(url, content);
                 if (response.IsSuccessStatusCode)
                 {
-                    string res = await response.Content.ReadAsStringAsync();
-                    JObject json = JObject.Parse(res);
-                    var id = (int) json["id"];
-                    return id;
+                    var resContent = await response.Content.ReadAsStringAsync();
+                    var jsonResponse = JsonConvert.DeserializeObject<StockModel>(resContent);
+                    return jsonResponse.Id;
                 }
-
-                return -1;
             }
-            catch(Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
-                return -1;
+                Console.WriteLine($"Error adding stock: {ex.Message}");
             }
+
+            return -1;
+        }
+
+        public async Task<int> UpdateStock(StockModel stk)
+        {
+            try
+            {
+                string url = $"{_baseUrl}stocks/stock/{stk.Id}";
+                var content = new StringContent(JsonConvert.SerializeObject(stk), Encoding.UTF8, "application/json");
+                var response = await _client.PatchAsync(url, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var resContent = await response.Content.ReadAsStringAsync();
+                    var jsonResponse = JsonConvert.DeserializeObject<StockModel>(resContent);
+                    return jsonResponse.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error adding stock: {ex.Message}");
+            }
+
+            return -1;
         }
     }
 }
