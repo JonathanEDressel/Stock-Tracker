@@ -8,75 +8,106 @@ using System.Runtime.InteropServices.JavaScript;
 using Xceed.Wpf.Toolkit;
 using Portfolio_Tracker.Pages.Shared;
 using System.Data.Entity.Core.Common.EntitySql;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Diagnostics;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Portfolio_Tracker.Pages
 {
     public class StocksModel : PageModel
     {
+        private readonly IMemoryCache _cache;
         private readonly StockController _stockController;
-        public List<StockModel> Stocks { get; set; } = new List<StockModel>();
         private readonly DatabaseContext _context;
+
+        public List<StockModel> Stocks { get; set; } = new List<StockModel>();
 
         [BindProperty]
         public StockModel NewStock { get; set; }
-        public ChartModel PieChartData { get; set; }
 
-        public StocksModel(DatabaseContext context, StockController stockController)
+        [BindProperty]
+        public int ChartSelection { get; set; }
+        public ChartModel ChartData { get; set; }
+
+        public StocksModel(IMemoryCache cache, DatabaseContext context, StockController stockController)
         {
+            _cache = cache;
             _context = context;
             _stockController = stockController;
         }
 
         public async Task OnGetAsync()
         {
-            var stocksTask = _stockController.GetAllStocks(0);
-            Stocks = await stocksTask;
-
-            List<string> labels = new List<string>();
-            List<double> data = new List<double>();
-
-            Stocks.ForEach(x =>
-                { 
-                    labels.Add(x.Symbol ?? "");
-
-                    double price = (double) x.CurrentPrice;
-                    double shares = (double) x.SharesOwned;
-                    var currentValue = shares * price;
-                    data.Add(currentValue);
-                });
-
-            PieChartData = new ChartModel
+            try
             {
-                ChartId = "myPieChart",
-                Labels = labels,
-                Data = data
-            };
-        }
+                Stocks = await _stockController.GetAllStocks(0);
 
-        public async Task<IActionResult> OnPostSyncStocks()
-        {
-            await _stockController.GetAllStocks(0);
-            return RedirectToPage();
+                List<string> labels = new List<string>();
+                List<double> data = new List<double>();
+
+                foreach (var s in Stocks)
+                {
+                    labels.Add(s.Symbol ?? "");
+                    data.Add((double)s.SharesOwned * s.CurrentPrice);
+                }
+
+                ChartData = new ChartModel
+                {
+                    Labels = labels,
+                    Data = data,
+                    ChartType = "pie",
+                    ChartId = "pieChart"
+                };
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Exception: ", e);
+                ModelState.AddModelError(string.Empty, "Error loading stocks");
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            var selectedValue = ChartSelection;
             if (NewStock == null || string.IsNullOrEmpty(NewStock.Symbol))
             {
                 ModelState.AddModelError(string.Empty, "Invalid stock symbol.");
                 return RedirectToPage();
             }
 
-            NewStock = await _stockController.GetStockDetails(NewStock.Symbol);
-            if (NewStock == null)
-                return RedirectToPage();
-
-            var res = await _stockController.AddStock(NewStock);
-            if (res > 0)
+            try
             {
-                _context.Stocks.Add(NewStock);
+                NewStock = await _stockController.GetStockDetails(NewStock.Symbol);
+                if (NewStock == null)
+                    return RedirectToPage();
+
+                var res = await _stockController.AddStock(NewStock);
+                if (res > 0)
+                {
+                    _context.Stocks.Add(NewStock);
+                    _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Exception: ", e);
+                ModelState.AddModelError(string.Empty, "Error adding stock.");
             }
 
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostSyncStocks()
+        {
+            try
+            {
+                await _stockController.GetAllStocks(0);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Exception: ", e);
+                ModelState.AddModelError(string.Empty, "Error syncing stocks.");
+            }
             return RedirectToPage();
         }
 
@@ -85,14 +116,22 @@ namespace Portfolio_Tracker.Pages
             if (!ModelState.IsValid)
                 return Page();
 
-            var stocks = await _stockController.GetAllStocks(0);
-            var stock = stocks.Find(x => x.Id == NewStock.Id);
-            
-            if(stock != null)
+            try
             {
-                stock.SharesOwned = (decimal) shares;
-                await _stockController.UpdateStock(stock);
-                await _context.SaveChangesAsync();
+                var stocks = await _stockController.GetAllStocks(0);
+                var stock = stocks.Find(x => x.Id == NewStock.Id);
+
+                if (stock != null)
+                {
+                    stock.SharesOwned = (decimal)shares;
+                    await _stockController.UpdateStock(stock);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine("Exception: ", e);
+                ModelState.AddModelError(string.Empty, "Error saving stocks.");
             }
 
             return RedirectToPage();
@@ -100,11 +139,21 @@ namespace Portfolio_Tracker.Pages
 
         public async Task<IActionResult> OnPostDelete(int id)
         {
-            var res = await _stockController.RemoveStock(id);
-            if (res)
-                return RedirectToPage();
+            try
+            {
+                var res = await _stockController.RemoveStock(id);
+                if (!res)
+                {
+                    ModelState.AddModelError(string.Empty, "Error deleting stock.");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Exception: ", e);
+                ModelState.AddModelError(string.Empty, "Error deleting stock.");
+            }
+
             return RedirectToPage();
         }
-
     }
 }

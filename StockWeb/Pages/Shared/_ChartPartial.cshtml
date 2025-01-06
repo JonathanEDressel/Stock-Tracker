@@ -1,0 +1,50 @@
+﻿@model Portfolio_Tracker.Models.ChartModel
+
+<canvas id="@Model.ChartId" style="width: 100%; max-width: 400px; height: auto;" width="400" height="400"></canvas>
+
+<script>
+    const data = {
+        labels: @Html.Raw(Json.Serialize(Model.Labels)),
+        datasets: [{
+            data: @Html.Raw(Json.Serialize(Model.Data)),
+            borderWidth: 2
+        }]
+    };
+
+    const config = {
+        type: "@Model.ChartType",
+        data: data,
+        options: {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(ctx) {
+                            var lbl = ctx.dataset.label || '';
+
+                            if (lbl)
+                                lbl += ': ';
+
+                            if(ctx.parsed != null) {
+                                lbl += new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD'
+                                }).format(ctx.parsed);
+                            }
+                            return lbl;
+                        }
+                    }
+                },
+                legend: {
+                    display: true,
+                    labels: {
+                        color: 'white'
+                    }
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    };
+    const ctx = document.getElementById("@Model.ChartId").getContext('2d');
+    new Chart(ctx, config);
+</script>

@@ -9,6 +9,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<DatabaseContext>();
 builder.Services.AddHttpClient<StockController>();
 
+builder.Services.AddMemoryCache();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
