@@ -29,6 +29,18 @@ def query_db(query, args=(), one=False):
     conn.close()
     return (rv[0] if rv else None) if one else rv
 
+def fetchStockData(symbol):
+    infoUrl = f"{base_url}/stock/profile2?symbol={symbol}&token={api_key}"
+    stockInfo = requests.get(infoUrl)
+    stockInfo.raise_for_status()
+
+    if stockInfo.status_code == 200:
+        data = {**stockInfo.json()}
+        if data.get("logo") is None:
+            return {"error": "Could not find stock"}, 404 
+        return {
+            "logo_url": data.get("logo")
+        } 
 
 def fetchData(symbol):
     priceUrl = f"{base_url}/quote?symbol={symbol}&token={api_key}"
@@ -98,17 +110,19 @@ def addStockData():
 @app.route('/stocks/stock/<int:id>', methods=['PATCH'])
 @limiter.limit("20 per minute")
 def editSharesHeld(id):
-    print(id)
     shares = request.json.get('sharesOwned')
-    print(request.json)
     return PortfolioData.edit_stock_shares(id, shares)
 
 @app.route('/stocks', methods=['GET'])
 @limiter.limit("20 per minute")
 def getUserStocks():
-    data = PortfolioData.get_stocks()
-    if data:
-        return data
+    dbData = PortfolioData.get_stocks()
+    res = []
+    for d in dbData:
+        tmp = fetchStockData(d['symbol'])
+        res.append({**tmp, **d})
+    if res:
+        return res
     else:
         return jsonify({"error:", "Could not get stocks"}), 404
 
