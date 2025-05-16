@@ -6,6 +6,11 @@ namespace Portfolio_Tracker.Models
     {
         [JsonProperty("id")]
         public int Id { get; set; }
+        [JsonProperty("logo_url")]
+        public string? Icon { get; set; }
+
+        [JsonProperty("total_value")]
+        public double? TotalValue { get; set; }
         [JsonProperty("sharesOwned")]
         public decimal SharesOwned { get; set; }
         [JsonProperty("symbol")]

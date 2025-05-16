@@ -17,6 +17,16 @@ html {
   min-height: 100%;
 }
 
+.main-container {
+    background-color: darkslategray;
+    margin-left: 10%;
+    width: 80%;
+}
+
+header {
+    font-size: 25px;
+}
+
 body {
     margin-bottom: 60px;
     background-image: url('/images/background.jpg');

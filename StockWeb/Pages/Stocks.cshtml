@@ -6,6 +6,15 @@
             .row-content:hover {
                 background-color: dodgerblue;
             }
+
+            td {
+                text-align: center;
+                align-content: center;
+            }
+
+            th {
+                text-align: center;
+            }
         </style>
         <div class="container" style="color: white;">
             <div class="row">
@@ -38,7 +47,9 @@
         <table class="table" style="color: white;">
             <thead>
                 <tr>
+                    <th>Icon</th>
                     <th>Symbol</th>
+                    <th>Total Value</th>
                     <th>Company</th>
                     <th>Sector</th>
                     <th>Shares</th>
@@ -56,7 +67,13 @@
             {
                     <tr class="row-content">
                         <td>
+                            <img src="@stock.Icon" style="width: 50px; height: auto; border-radius: 50%;">
+                        </td>
+                        <td>
                             <span>@stock.Symbol</span>
+                        </td>
+                        <td>
+                            <span><span>$</span>@stock.TotalValue</span>
                         </td>
                         <td>
                             @stock.Company
@@ -68,16 +85,16 @@
                             <input type="number" class="shares-input" value="@stock.SharesOwned" data-stock-id="@stock.Id" />
                         </td>
                         <td>
-                            <span>@stock.CurrentPrice</span>
+                            <span><span>$</span>@stock.CurrentPrice</span>
                         </td>
                         <td>
-                            <span>@stock.OpenPrice</span>
+                        <span><span>$</span>@stock.OpenPrice</span>
                         </td>
                         <td>
-                            <span>@stock.HighPrice</span>
+                            <span><span>$</span>@stock.HighPrice</span>
                         </td>
                         <td>
-                            <span>@stock.LowPrice</span>
+                            <span><span>$</span>@stock.LowPrice</span>
                         </td>
                         <td>
                             <form method="post" asp-page-handler="SaveStocks" data-form-id="@stock.Id">
