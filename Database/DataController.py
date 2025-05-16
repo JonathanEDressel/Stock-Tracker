@@ -4,6 +4,7 @@ from flask_limiter.util import get_remote_address
 from dotenv import load_dotenv
 import sqlite3
 import PortfolioData
+import CalcService
 import requests
 import os
 
@@ -61,6 +62,7 @@ def fetchData(symbol):
                 "id": 0,
                 "symbol": symbol,
                 "name": data.get("name"),
+                "total_value": 0,
                 "sharesOwned": 0,
                 "sector": data.get("finnhubIndustry"),
                 "current_price": data.get("c"),
@@ -74,10 +76,13 @@ def fetchData(symbol):
             if data.get("name") is None:
                 return {"error": "Could not find stock"}, 404
 
+            totalValue = CalcService.calc_stock_value(data.get("sharesOwned"), data.get("c"))
+
             return {
                 "id": data.get("id"),
                 "symbol": symbol,
                 "name": data.get("name"),
+                "total_value": totalValue,
                 "sharesOwned": data.get("sharesOwned"),
                 "sector": data.get("finnhubIndustry"),
                 "current_price": data.get("c"),
