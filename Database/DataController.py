@@ -18,7 +18,7 @@ app = Flask(__name__)
 limiter = Limiter(
     get_remote_address,
     app=app,
-    default_limits=["20 per minute"]
+    default_limits=["60 per minute"]
 )
 
 def query_db(query, args=(), one=False):
@@ -75,9 +75,11 @@ def fetchData(symbol):
             data = {**priceRes.json(), **profileRes.json(), **dbRes}
             if data.get("name") is None:
                 return {"error": "Could not find stock"}, 404
-
-            totalValue = CalcService.calc_stock_value(data.get("sharesOwned"), data.get("c"))
-
+            
+            sharesOwned = data.get("sharesOwned") or 0.00
+            currPrice = data.get("c") or 0
+            totalValue = CalcService.calc_stock_value(sharesOwned, currPrice)
+            
             return {
                 "id": data.get("id"),
                 "symbol": symbol,

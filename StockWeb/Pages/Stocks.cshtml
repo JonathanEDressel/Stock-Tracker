@@ -18,120 +18,128 @@
         </style>
         <div class="container" style="color: white;">
             <div class="row">
-                <div class="col align-self-center" style="text-align: center;">
-                    <h1>Positions</h1>
+                <div class="col col-12 d-flex justify-content-start">
+                    <h1>Stocks & ETFs</h1>
                 </div>
             </div>
-        </div>
-        <form method="post">
-            <div class="container" style="color: white;">
-                <div class="row justify-content-start">
-                    <div class="col-auto">
-                        <span>
-                            <span style="font-weight: 650;">Stock</span>
-                            <input type="text" name="symbol" placeholder="NVDA" />
-                        </span>
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-success">Add Stock</button>
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-primary" type="submit" asp-page-handler="SyncStocks">
+            <form method="post">
+                <div class="container" style="color: white;">
+                    <div class="row d-flex justify-content-end align-items-center">
+                        <div class="col col-auto">
+                            <span>
+                                <span style="font-weight: 650;">Stock</span>
+                                <input type="text" name="symbol" placeholder="GOOGL" />
+                            </span>
+                        </div>
+                        <div class="col col-auto">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                        <div class="col col-auto">
+                            <button class="btn btn-primary" type="submit" asp-page-handler="SyncStocks">
                                 <i class="fa-solid fa-arrows-rotate"></i>
-                        </button>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col col-12 d-flex justify-content-center">
+                    <div class="table-responsive">
+                        <table class="table" style="color: white;">
+                            <thead>
+                                <tr>
+                                    <th>Icon</th>
+                                    <th>Symbol</th>
+                                    <th>Total Value</th>
+                                    <th>Company</th>
+                                    <th>Sector</th>
+                                    <th>Shares</th>
+                                    <th>Current Price</th>
+                                    <th>Open Price</th>
+                                    <th>High Price</th>
+                                    <th>Low Price</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (StockModel stock in Model.Stocks)
+                            {
+                                    <tr class="row-content">
+                                        <td>
+                                            <img src="@stock.Icon" style="width: 50px; height: auto; border-radius: 50%;">
+                                        </td>
+                                        <td>
+                                            <span>@stock.Symbol</span>
+                                        </td>
+                                        <td>
+                                            <span><span>$</span>@stock.TotalValue</span>
+                                        </td>
+                                        <td>
+                                            @stock.Company
+                                        </td>
+                                        <td>
+                                            <span>@stock.Sector</span>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="shares-input" value="@stock.SharesOwned" data-stock-id="@stock.Id" />
+                                        </td>
+                                        <td>
+                                            <span><span>$</span>@stock.CurrentPrice</span>
+                                        </td>
+                                        <td>
+                                        <span><span>$</span>@stock.OpenPrice</span>
+                                        </td>
+                                        <td>
+                                            <span><span>$</span>@stock.HighPrice</span>
+                                        </td>
+                                        <td>
+                                            <span><span>$</span>@stock.LowPrice</span>
+                                        </td>
+                                        <td>
+                                            <form method="post" asp-page-handler="SaveStocks" data-form-id="@stock.Id">
+                                                <input type="hidden" name="id" value="@stock.Id" />
+                                                <input type="hidden" name="shares" value="@stock.SharesOwned" />
+                                                <button class="btn btn-success save-button" type="submit" data-stock-id="@stock.Id">
+                                                    <i class="fa-regular fa-floppy-disk"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form method="post" asp-page-handler="Delete" asp-route-id="@stock.Id">
+                                                <button class="btn btn-danger" type="submit">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                            }
+                            </tbody>
+                         </table>
                     </div>
                 </div>
             </div>
-        </form>
-
-        <table class="table" style="color: white;">
-            <thead>
-                <tr>
-                    <th>Icon</th>
-                    <th>Symbol</th>
-                    <th>Total Value</th>
-                    <th>Company</th>
-                    <th>Sector</th>
-                    <th>Shares</th>
-                    <th>Current Price</th>
-                    <th>Open Price</th>
-                    <th>High Price</th>
-                    <th>Low Price</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach (StockModel stock in Model.Stocks)
-            {
-                    <tr class="row-content">
-                        <td>
-                            <img src="@stock.Icon" style="width: 50px; height: auto; border-radius: 50%;">
-                        </td>
-                        <td>
-                            <span>@stock.Symbol</span>
-                        </td>
-                        <td>
-                            <span><span>$</span>@stock.TotalValue</span>
-                        </td>
-                        <td>
-                            @stock.Company
-                        </td>
-                        <td>
-                            <span>@stock.Sector</span>
-                        </td>
-                        <td>
-                            <input type="number" class="shares-input" value="@stock.SharesOwned" data-stock-id="@stock.Id" />
-                        </td>
-                        <td>
-                            <span><span>$</span>@stock.CurrentPrice</span>
-                        </td>
-                        <td>
-                        <span><span>$</span>@stock.OpenPrice</span>
-                        </td>
-                        <td>
-                            <span><span>$</span>@stock.HighPrice</span>
-                        </td>
-                        <td>
-                            <span><span>$</span>@stock.LowPrice</span>
-                        </td>
-                        <td>
-                            <form method="post" asp-page-handler="SaveStocks" data-form-id="@stock.Id">
-                                <input type="hidden" name="id" value="@stock.Id" />
-                                <input type="hidden" name="shares" value="@stock.SharesOwned" />
-                                <button class="btn btn-success save-button" type="submit" data-stock-id="@stock.Id">
-                                    <i class="fa-regular fa-floppy-disk"></i>
-                                </button>
-                            </form>
-                        </td>
-                        <td>
-                            <form method="post" asp-page-handler="Delete" asp-route-id="@stock.Id">
-                                <button class="btn btn-danger" type="submit">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-            }
-            </tbody>
-         </table>
-        <form method="post">
-            <div>
-                <div class="d-flex justify-content-center mt-3">
-                    <div class="col-auto">
-                    @try
-                    {
-                        @await Html.PartialAsync("_ChartPartial", Model.ChartData)
-                    }
-                    catch (Exception ex)
-                    {
-                        <p style="color: red">Error: @ex.Message</p>
-                    }
+            <form method="post">
+                <div>
+                    <div class="d-flex justify-content-center mt-3">
+                        <div class="col-auto">
+                        @try
+                        {
+                            @await Html.PartialAsync("_ChartPartial", Model.ChartData)
+                        }
+                        catch (Exception ex)
+                        {
+                            <p style="color: red">Error: @ex.Message</p>
+                        }
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+
 
         <script>
             document.querySelectorAll('.save-button').forEach(button => {
