@@ -14,7 +14,7 @@ def calc_stock_value(shares, currPrice):
     res = 0
     s = float(shares)
     p = float(currPrice)
-    res = round(shares * currPrice, 2)
+    res = round(s * p, 2)
     return res
 
 #Just a 401k with Employer match
