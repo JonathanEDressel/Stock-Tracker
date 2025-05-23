@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, abort
-from limiter import Limiter
-from limiter.util import get_remote_address
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from dotenv import load_dotenv
 import sqlite3
 import PortfolioData
