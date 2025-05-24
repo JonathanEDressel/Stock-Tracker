@@ -7,8 +7,20 @@
       "RelativeMoniker": "D:0:0:{9275D85B-A25D-4DCD-BF23-82ED5D5C659F}|Portfolio Tracker.csproj|solutionrelative:pages\\stocks.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{9275D85B-A25D-4DCD-BF23-82ED5D5C659F}|Portfolio Tracker.csproj|c:\\users\\jonny\\documents\\resume projects\\portfolio tracker\\stockweb\\helpers\\charthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9275D85B-A25D-4DCD-BF23-82ED5D5C659F}|Portfolio Tracker.csproj|solutionrelative:helpers\\charthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9275D85B-A25D-4DCD-BF23-82ED5D5C659F}|Portfolio Tracker.csproj|c:\\users\\jonny\\documents\\resume projects\\portfolio tracker\\stockweb\\models\\stockmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9275D85B-A25D-4DCD-BF23-82ED5D5C659F}|Portfolio Tracker.csproj|solutionrelative:models\\stockmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9275D85B-A25D-4DCD-BF23-82ED5D5C659F}|Portfolio Tracker.csproj|c:\\users\\jonny\\documents\\resume projects\\portfolio tracker\\stockweb\\controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9275D85B-A25D-4DCD-BF23-82ED5D5C659F}|Portfolio Tracker.csproj|solutionrelative:controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9275D85B-A25D-4DCD-BF23-82ED5D5C659F}|Portfolio Tracker.csproj|c:\\users\\jonny\\documents\\resume projects\\portfolio tracker\\stockweb\\helpers\\calculatehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9275D85B-A25D-4DCD-BF23-82ED5D5C659F}|Portfolio Tracker.csproj|solutionrelative:helpers\\calculatehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9275D85B-A25D-4DCD-BF23-82ED5D5C659F}|Portfolio Tracker.csproj|c:\\users\\jonny\\documents\\resume projects\\portfolio tracker\\stockweb\\pages\\stocks.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -17,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9275D85B-A25D-4DCD-BF23-82ED5D5C659F}|Portfolio Tracker.csproj|c:\\users\\jonny\\documents\\resume projects\\portfolio tracker\\stockweb\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{9275D85B-A25D-4DCD-BF23-82ED5D5C659F}|Portfolio Tracker.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9275D85B-A25D-4DCD-BF23-82ED5D5C659F}|Portfolio Tracker.csproj|c:\\users\\jonny\\documents\\resume projects\\portfolio tracker\\stockweb\\models\\stockmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9275D85B-A25D-4DCD-BF23-82ED5D5C659F}|Portfolio Tracker.csproj|solutionrelative:models\\stockmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +42,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Stocks.cshtml",
               "DocumentMoniker": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Pages\\Stocks.cshtml",
               "RelativeDocumentMoniker": "Pages\\Stocks.cshtml",
@@ -43,8 +51,7 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-12-31T02:23:13.225Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -54,7 +61,7 @@
               "RelativeDocumentMoniker": "Pages\\Stocks.cshtml.cs",
               "ToolTip": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Pages\\Stocks.cshtml.cs",
               "RelativeToolTip": "Pages\\Stocks.cshtml.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAAwCUAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAA1wCcAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-15T22:13:46.036Z",
               "IsPinned": true,
@@ -62,21 +69,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "StockController.cs",
-              "DocumentMoniker": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Controllers\\StockController.cs",
-              "RelativeDocumentMoniker": "Controllers\\StockController.cs",
-              "ToolTip": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Controllers\\StockController.cs",
-              "RelativeToolTip": "Controllers\\StockController.cs",
-              "ViewState": "AgIAAFIAAAAAAAAAAAAgwGEAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-15T22:14:03.294Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -84,20 +77,64 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-05-23T03:32:01.491Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-23T03:32:01.491Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "StockModel.cs",
               "DocumentMoniker": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Models\\StockModel.cs",
               "RelativeDocumentMoniker": "Models\\StockModel.cs",
               "ToolTip": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Models\\StockModel.cs",
               "RelativeToolTip": "Models\\StockModel.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAIAwwAwAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-08T02:28:19.533Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CalculateHelper.cs",
+              "DocumentMoniker": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Helpers\\CalculateHelper.cs",
+              "RelativeDocumentMoniker": "Helpers\\CalculateHelper.cs",
+              "ToolTip": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Helpers\\CalculateHelper.cs",
+              "RelativeToolTip": "Helpers\\CalculateHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T06:07:41.705Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ChartHelper.cs",
+              "DocumentMoniker": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Helpers\\ChartHelper.cs",
+              "RelativeDocumentMoniker": "Helpers\\ChartHelper.cs",
+              "ToolTip": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Helpers\\ChartHelper.cs",
+              "RelativeToolTip": "Helpers\\ChartHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T06:07:22.639Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "StockController.cs",
+              "DocumentMoniker": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Controllers\\StockController.cs",
+              "RelativeDocumentMoniker": "Controllers\\StockController.cs",
+              "ToolTip": "C:\\Users\\jonny\\Documents\\Resume Projects\\Portfolio Tracker\\StockWeb\\Controllers\\StockController.cs",
+              "RelativeToolTip": "Controllers\\StockController.cs",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAowHsAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-15T22:14:03.294Z",
               "EditorCaption": ""
             }
           ]
