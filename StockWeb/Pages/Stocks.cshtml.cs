@@ -16,7 +16,6 @@ namespace Portfolio_Tracker.Pages
 {
     public class StocksModel : PageModel
     {
-        private readonly IMemoryCache _cache;
         private readonly StockController _stockController;
         private readonly DatabaseContext _context;
 
@@ -31,7 +30,6 @@ namespace Portfolio_Tracker.Pages
 
         public StocksModel(IMemoryCache cache, DatabaseContext context, StockController stockController)
         {
-            _cache = cache;
             _context = context;
             _stockController = stockController;
         }
@@ -40,22 +38,7 @@ namespace Portfolio_Tracker.Pages
         {
             try
             {
-                if (!_cache.TryGetValue("StockData", out List<StockModel> data))
-                {
-                    data = await _stockController.GetAllStocks(0);
-
-                    MemoryCacheEntryOptions cacheData = new MemoryCacheEntryOptions
-                    {
-                        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(20),
-                        SlidingExpiration = TimeSpan.FromMinutes(2)
-                    };
-
-                    _cache.Set("StockData", data, cacheData);
-                }
-
-                Stocks = data;
-
-                //Stocks = await _stockController.GetAllStocks(0);
+                Stocks = await _stockController.GetAllStocks(0);
 
                 List<string> labels = new List<string>();
                 List<double> values = new List<double>();
@@ -100,6 +83,7 @@ namespace Portfolio_Tracker.Pages
                 if (res > 0)
                 {
                     _context.Stocks.Add(NewStock);
+                    //_cache.Set("StockData", data, cacheData);
                     await _context.SaveChangesAsync();
                 }
             }
@@ -133,21 +117,7 @@ namespace Portfolio_Tracker.Pages
 
             try
             {
-                if (!_cache.TryGetValue("StockData", out List<StockModel> data))
-                {
-                    data = await _stockController.GetAllStocks(0);
-
-                    MemoryCacheEntryOptions cacheData = new MemoryCacheEntryOptions
-                    {
-                        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(20),
-                        SlidingExpiration = TimeSpan.FromMinutes(2)
-                    };
-
-                    _cache.Set("StockData", data, cacheData);
-                }
-
-                var stocks = data;
-                var stock = stocks.Find(x => x.Id == NewStock.Id);
+                var stock = Stocks.Find(x => x.Id == NewStock.Id); //stocks.Find(x => x.Id == NewStock.Id);
 
                 if (stock != null)
                 {
@@ -169,19 +139,7 @@ namespace Portfolio_Tracker.Pages
         {
             try
             {
-                if (!_cache.TryGetValue("StockData", out List<StockModel> data))
-                {
-                    data = await _stockController.GetAllStocks(0);
-
-                    MemoryCacheEntryOptions cacheData = new MemoryCacheEntryOptions
-                    {
-                        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(20),
-                        SlidingExpiration = TimeSpan.FromMinutes(2)
-                    };
-
-                    _cache.Set("StockData", data, cacheData);
-                }
-                data.RemoveAll(x => x.Id == id);
+                Stocks.RemoveAll(x => x.Id == id);
                 var res = await _stockController.RemoveStock(id);
                 if (!res)
                 {
