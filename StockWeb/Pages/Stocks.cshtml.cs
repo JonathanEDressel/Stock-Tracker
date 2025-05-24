@@ -1,25 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Newtonsoft.Json.Linq;
 using Portfolio_Tracker.Controllers;
 using Portfolio_Tracker.Models;
-using System.Windows.Forms;
-using System.Runtime.InteropServices.JavaScript;
-using Xceed.Wpf.Toolkit;
-using Portfolio_Tracker.Pages.Shared;
-using System.Data.Entity.Core.Common.EntitySql;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Diagnostics;
-using Microsoft.Extensions.Caching.Memory;
+using Portfolio_Tracker.Helpers;
 
 namespace Portfolio_Tracker.Pages
 {
     public class StocksModel : PageModel
     {
-        private readonly IMemoryCache _cache;
         private readonly StockController _stockController;
         private readonly DatabaseContext _context;
+        private readonly ChartHelper _chartHelper;
 
+        [BindProperty]
         public List<StockModel> Stocks { get; set; } = new List<StockModel>();
 
         [BindProperty]
@@ -29,50 +23,20 @@ namespace Portfolio_Tracker.Pages
         public int ChartSelection { get; set; }
         public ChartModel ChartData { get; set; }
 
-        public StocksModel(IMemoryCache cache, DatabaseContext context, StockController stockController)
+        public StocksModel(DatabaseContext context, StockController stockController)
         {
-            _cache = cache;
             _context = context;
             _stockController = stockController;
+            _chartHelper = new ChartHelper();
         }
 
         public async Task OnGetAsync()
         {
             try
             {
-                if (!_cache.TryGetValue("StockData", out List<StockModel> data))
-                {
-                    data = await _stockController.GetAllStocks(0);
+                Stocks = await _stockController.GetAllStocks(0);
 
-                    MemoryCacheEntryOptions cacheData = new MemoryCacheEntryOptions
-                    {
-                        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(20),
-                        SlidingExpiration = TimeSpan.FromMinutes(2)
-                    };
-
-                    _cache.Set("StockData", data, cacheData);
-                }
-
-                Stocks = data;
-
-                //Stocks = await _stockController.GetAllStocks(0);
-
-                List<string> labels = new List<string>();
-                List<double> values = new List<double>();
-
-                foreach (var s in Stocks)
-                {
-                    labels.Add(s.Symbol ?? "");
-                    values.Add((double)s.SharesOwned * s.CurrentPrice);
-                }
-
-                ChartData = new ChartModel
-                {
-                    Labels = labels,
-                    Data = values,
-                    ChartType = "pie",
-                    ChartId = "pieChart"
-                };
+                ChartData = await _chartHelper.CreateChart(Stocks, "pieChart");
             }
             catch (Exception e)
             {
@@ -133,27 +97,17 @@ namespace Portfolio_Tracker.Pages
 
             try
             {
-                if (!_cache.TryGetValue("StockData", out List<StockModel> data))
-                {
-                    data = await _stockController.GetAllStocks(0);
-
-                    MemoryCacheEntryOptions cacheData = new MemoryCacheEntryOptions
-                    {
-                        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(20),
-                        SlidingExpiration = TimeSpan.FromMinutes(2)
-                    };
-
-                    _cache.Set("StockData", data, cacheData);
-                }
-
-                var stocks = data;
-                var stock = stocks.Find(x => x.Id == NewStock.Id);
+                Stocks = await _stockController.GetAllStocks(0);
+                var stock = Stocks.Find(x => x.Id == id); 
 
                 if (stock != null)
                 {
                     stock.SharesOwned = (decimal)shares;
+                    stock.TotalValue = shares * stock.CurrentPrice;
                     await _stockController.UpdateStock(stock);
                     await _context.SaveChangesAsync();
+
+                    ChartData = await _chartHelper.CreateChart(Stocks, "pieChart");
                 }
             }
             catch(Exception e)
@@ -169,19 +123,8 @@ namespace Portfolio_Tracker.Pages
         {
             try
             {
-                if (!_cache.TryGetValue("StockData", out List<StockModel> data))
-                {
-                    data = await _stockController.GetAllStocks(0);
-
-                    MemoryCacheEntryOptions cacheData = new MemoryCacheEntryOptions
-                    {
-                        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(20),
-                        SlidingExpiration = TimeSpan.FromMinutes(2)
-                    };
-
-                    _cache.Set("StockData", data, cacheData);
-                }
-                data.RemoveAll(x => x.Id == id);
+                Stocks = await _stockController.GetAllStocks(0);
+                Stocks.RemoveAll(x => x.Id == id);
                 var res = await _stockController.RemoveStock(id);
                 if (!res)
                 {
