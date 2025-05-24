@@ -14,9 +14,10 @@
   <li>Add authentication for login - Date TBD</li>
   <li>Auto refresh list of stocks chosen - Date TBD</li>
   <li>Add 401(k) calculator - Date TBD</li>
-  <li>Insert stock icons - Date TBD</li>
   <li>Let user choose between which chart to view - Date TBD</li>
   <li>Add bubble chart to stock's page - Date TBD</li>
+  <s><li>Add Helper functions</li></s>
+  <s><li>Insert stock icons - January 15th, 2025</li></s>
   <li><s>Add pie chart to stock's page </s> - December 30th, 2024</li>
   <li><s>Add auto refresh button</s> - December 30th, 2024</li>
   <li><s>Ability to save shares held</s> - December 11th, 2024</li>
