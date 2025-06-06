@@ -1,5 +1,20 @@
 <h1>Portfolio Tracker</h1>
 
+<h3>What I Learned</h3>
+<span>I'm brining this project to a close. Why? Well, because of many issues but it all boils down to one thing, design. I wanted a website that could handle 
+tons of data. Since this was a stock app and we were needing tons of calls to the backend for stock information, our current implementation wouldn't be the best
+ fit. This is due to Razor Pages. Out of my excitement to use Razor Pages and become more affiliated with it, I made the fatal flaw of using a framework 
+that isn't the best with handling tons of data. </span>
+
+<span> Despite this mistake, I still learned a lot. I learned the difference between a single page application and multi page application. I learned about
+how to create my own back end in Python and route calls between C# and Python. I was able to implement API security with rate limiting and prevent some injection attacks.
+Since starting this project and working on other projects, I learned how to use good designs with HTML/CSS. I renewed my understanding of handling basic CRUD operations.
+</span>
+
+<span> Overall, I would say this was a success. Why would I consider a proejct that I am abandoning to be considered a success? Because I learned something. Even though 
+I developed a poor application, I know more now than I did before I started the project. That's what I see as valuable when working on side projects. 
+</span>
+
 <h3>Welcome</h3>
 <span>Hello, my name is <b>Jonathan Dressel</b> and welcome to my Portfolio Tracker. I created this project in November 
   of 2024 to display the skills that I developed over the course of my career. I am working on this project in
